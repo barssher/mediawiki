@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: True
+  roles:
+    - init
+
+- hosts: proxy
+  become: True
+  roles:
+    - nginx_proxy
+
+- hosts: backend
+  become: True
+  roles:
+    - nginx_backend
