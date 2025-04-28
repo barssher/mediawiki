@@ -1,0 +1,16 @@
+upstream mediawiki {
+    server ;
+    server ;
+}
+
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+        proxy_pass http://mediawiki;
+        proxy_set_headers Host $host;
+        proxy_set_headers X-Real-IP $remote_addr;
+        proxy_set_headers X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
