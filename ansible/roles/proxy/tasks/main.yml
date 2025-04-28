@@ -1,0 +1,12 @@
+---
+- name: Установка nginx
+  apt:
+    name: nginx
+    state: present
+    update_cache: true
+
+- name: Конфигурация nginx
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/sites-available/default
+  notify: Reload nginx

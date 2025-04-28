@@ -1,15 +1,30 @@
 ---
-- hosts: all
-  become: True
-  roles:
-    - init
-
 - hosts: proxy
   become: True
   roles:
-    - nginx_proxy
+    - proxy
 
 - hosts: backend
   become: True
   roles:
-    - nginx_backend
+    - backend
+
+- hosts: database
+  become: True
+  roles:
+    - database
+
+- hosts: zabbix
+  become: True
+  roles:
+    - zabbix
+
+- hosts: backup
+  become: True
+  roles:
+    - backup
+
+- hosts: all
+  become: True
+  roles:
+    - zabbix-agent

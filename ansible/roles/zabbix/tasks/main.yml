@@ -1,0 +1,21 @@
+---
+- name: Установка Zabbix
+  apt:
+    name:
+      - zabbix-server-pgsql
+      - zabbix-frontend-php
+      - zabbix-agent
+    state: present
+    update_cache: true
+
+- name: Активация Zabbix сервера
+  service:
+    name: zabbix-server
+    state: started
+    enabled: true
+
+- name: Активация Zabbix агента
+  service:
+    name: zabbix-agent
+    state: started
+    enabled: true
