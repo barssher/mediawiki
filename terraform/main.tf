@@ -15,7 +15,7 @@ provider "yandex" {
 }
 
 resource "yandex_compute_instance" "vm" {
-  count = 6
+  count = 7
   name = "terraform-vm-${count.index + 1}"
   zone = var.zone
 

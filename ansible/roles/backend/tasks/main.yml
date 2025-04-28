@@ -14,5 +14,6 @@
 - name: Загрузка и распоковка mediawiki
   shell: |
     wget https://releases.wikimedia.org/mediawiki/1.42/mediawiki-1.42.6.tar.gz -O /tmp/mediawiki.tar.gz
-    tar xzf /tmp/mediawiki.tar.gz -C /var/www/
+    rm -fr /var/www/mediawiki*
+    tar xzf /tmp/mediawiki.tar.gz -C /var/www
     mv /var/www/mediawiki-1.42.6 /var/www/mediawiki

@@ -1,12 +1,37 @@
 ---
-- name: Установка DB
-  apt:
-    name: postgresql
-    state: present
-    update_cache: true
+- name: Создание директории для хранения архивов
+  file:
+    path: "/backup/{{ item }}"
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: "0755"
+  loop:
+    - db
+    - files
 
-- name: Конфигурация DB
-  shell: |
-    echo "host replication all 0.0.0.0/0  md5" >> /etc/postgresql/*/main/pg_hba.conf
-    echo "wal_level = replica" >> /etc/postgresql/*/main/postgresql.conf
-    systemctl restart postgresql
+- name: Копирование скрипта архивации файлов
+  copy:
+    src: scripts/backup_files.sh
+    dest: /usr/local/bin/backup_files.sh
+    mode: "0755"
+
+- name: Копирование скрипта архивация БД
+  copy:
+    src: scripts/backup_db.sh
+    dest: /usr/local/bin/backup_db.sh
+    mode: "0755"
+
+- name: Установка планировщика архивации файлов
+  cron:
+    name: Архивация файлов
+    job: /usr/local/bin/backup_files.sh
+    minute: 0
+    hour: 2
+
+- name: Установка планировщика архивации БД
+  cron:
+    name: Архивация файлов
+    job: /usr/local/bin/backup_db.sh
+    minute: 0
+    hour: 3
