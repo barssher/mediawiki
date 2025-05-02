@@ -1,12 +1,17 @@
 ---
-- name: Установка Zabbix
+- name: Добавление Zabbix репозитория
+  shell: |
+    wget https://repo.zabbix.com/zabbix/7.2/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.2+ubuntu24.04_all.deb
+    sudo dpkg -i zabbix-release_latest_7.2+ubuntu24.04_all.deb
+
+- name: Установка Zabbix агента
   apt:
-    name: zabbix-agent
+    name: zabbix-agent2
     state: present
     update_cache: true
 
 - name: Активация Zabbix агента
   service:
-    name: zabbix-agent
+    name: zabbix-agent2
     state: started
     enabled: true

@@ -11,9 +11,18 @@
     state: present
     update_cache: true
 
-- name: Загрузка и распоковка mediawiki
+- name: Загрузка и распаковка mediawiki
   shell: |
     wget https://releases.wikimedia.org/mediawiki/1.42/mediawiki-1.42.6.tar.gz -O /tmp/mediawiki.tar.gz
     rm -fr /var/www/mediawiki*
     tar xzf /tmp/mediawiki.tar.gz -C /var/www
     mv /var/www/mediawiki-1.42.6 /var/www/mediawiki
+
+- name: Deploy preconfigured LocalSettings.php
+  copy:
+    src: LocalSettings.php
+    dest: /var/www/mediawiki/LocalSettings.php
+    owner: www-data
+    group: www-data
+    mode: '0600'
+
